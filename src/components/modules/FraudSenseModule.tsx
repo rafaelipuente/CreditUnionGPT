@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Shield, Upload, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
+import { Shield, Upload, AlertTriangle, CheckCircle, Clock, Download, Info } from 'lucide-react';
 
 export const FraudSenseModule = () => {
   const [analyzing, setAnalyzing] = useState(false);
   const [results, setResults] = useState<any>(null);
+  const [reportDownloaded, setReportDownloaded] = useState(false);
 
   const mockTransactions = [
     { id: 1, amount: 2500, merchant: "Electronics Store", time: "2:34 AM", risk: "high" },
@@ -23,6 +24,8 @@ export const FraudSenseModule = () => {
         flaggedTransactions: 2,
         totalTransactions: 247,
         riskScore: 73,
+        confidence: 91,
+        topPattern: "Late-night high-value transactions",
         alerts: [
           "Unusual late-night transaction pattern detected",
           "Transaction amount exceeds normal spending",
@@ -31,6 +34,12 @@ export const FraudSenseModule = () => {
       });
       setAnalyzing(false);
     }, 3000);
+  };
+
+  const handleDownloadReport = () => {
+    setReportDownloaded(true);
+    console.log('Generating fraud detection report...');
+    setTimeout(() => setReportDownloaded(false), 3000);
   };
 
   const getRiskIcon = (risk: string) => {
@@ -48,18 +57,24 @@ export const FraudSenseModule = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-400 rounded-lg flex items-center justify-center">
-          <Shield className="w-5 h-5 text-white" />
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-400 rounded-lg flex items-center justify-center">
+            <Shield className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800">FraudSense</h1>
+            <p className="text-slate-600">Real-time fraud detection and transaction monitoring</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800">FraudSense</h1>
-          <p className="text-slate-600">Real-time fraud detection and transaction monitoring</p>
+        <div className="flex items-center gap-2">
+          <Shield className="w-4 h-4 text-green-600" />
+          <span className="text-xs text-slate-600">Secure AI Processing</span>
         </div>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 transition-all duration-200 hover:shadow-md">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Upload className="w-5 h-5" />
@@ -68,13 +83,19 @@ export const FraudSenseModule = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center">
+              <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center relative">
+                <div className="absolute top-2 right-2 group">
+                  <Info className="w-4 h-4 text-slate-400 cursor-help" />
+                  <div className="absolute right-0 top-6 hidden group-hover:block bg-slate-800 text-white text-xs p-2 rounded shadow-lg w-48 z-10">
+                    Your data is processed securely and not stored permanently
+                  </div>
+                </div>
                 <Upload className="w-8 h-8 mx-auto mb-2 text-slate-400" />
                 <p className="text-slate-600 mb-3">Upload transaction logs or simulate analysis</p>
                 <Button 
                   onClick={handleAnalyze}
                   disabled={analyzing}
-                  className="bg-gradient-to-r from-red-500 to-orange-400 hover:from-red-600 hover:to-orange-500"
+                  className="bg-gradient-to-r from-red-500 to-orange-400 hover:from-red-600 hover:to-orange-500 transition-all duration-200"
                 >
                   {analyzing ? 'Analyzing...' : 'Simulate Analysis'}
                 </Button>
@@ -83,7 +104,7 @@ export const FraudSenseModule = () => {
               <div className="space-y-2">
                 <h4 className="font-semibold">Recent Transactions</h4>
                 {mockTransactions.map((transaction) => (
-                  <div key={transaction.id} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div key={transaction.id} className="flex items-center justify-between p-3 border rounded-lg transition-all duration-200 hover:bg-slate-50">
                     <div className="flex items-center gap-3">
                       {getRiskIcon(transaction.risk)}
                       <div>
@@ -102,18 +123,22 @@ export const FraudSenseModule = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="transition-all duration-200 hover:shadow-md">
           <CardHeader>
             <CardTitle>Fraud Analytics</CardTitle>
           </CardHeader>
           <CardContent>
             {results ? (
-              <div className="space-y-4">
+              <div className="space-y-4 animate-fade-in">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-400 rounded-full mx-auto flex items-center justify-center mb-3">
                     <span className="text-white font-bold">{results.riskScore}</span>
                   </div>
-                  <p className="text-sm text-slate-600">Risk Score</p>
+                  <p className="text-sm text-slate-600 mb-2">Risk Score</p>
+                  <div className="text-xs text-slate-500">
+                    <div>Confidence: {results.confidence}%</div>
+                    <div className="mt-1">Pattern: {results.topPattern}</div>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
@@ -138,6 +163,16 @@ export const FraudSenseModule = () => {
                     ))}
                   </div>
                 </div>
+
+                <Button 
+                  onClick={handleDownloadReport}
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full transition-all duration-200 hover:bg-slate-50"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  {reportDownloaded ? 'Report Saved ✓' : 'Download Report'}
+                </Button>
               </div>
             ) : (
               <div className="text-center text-slate-500 py-8">

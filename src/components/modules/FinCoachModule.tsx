@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Target, TrendingUp, DollarSign, Calendar } from 'lucide-react';
+import { Target, TrendingUp, DollarSign, Calendar, Download, Shield } from 'lucide-react';
 
 export const FinCoachModule = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +17,7 @@ export const FinCoachModule = () => {
   });
   const [recommendations, setRecommendations] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [reportDownloaded, setReportDownloaded] = useState(false);
 
   const handleAnalyze = () => {
     setLoading(true);
@@ -24,6 +25,8 @@ export const FinCoachModule = () => {
       setRecommendations({
         monthlyTarget: 485,
         riskProfile: "Moderate",
+        confidence: 89,
+        keyStrategy: "Automated savings plan",
         recommendations: [
           "Open a high-yield savings account",
           "Consider a diversified investment portfolio",
@@ -37,20 +40,32 @@ export const FinCoachModule = () => {
     }, 2000);
   };
 
+  const handleDownloadReport = () => {
+    setReportDownloaded(true);
+    console.log('Generating financial coaching report...');
+    setTimeout(() => setReportDownloaded(false), 3000);
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-400 rounded-lg flex items-center justify-center">
-          <Target className="w-5 h-5 text-white" />
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-400 rounded-lg flex items-center justify-center">
+            <Target className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800">FinCoach</h1>
+            <p className="text-slate-600">Personalized financial guidance and goal tracking</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800">FinCoach</h1>
-          <p className="text-slate-600">Personalized financial guidance and goal tracking</p>
+        <div className="flex items-center gap-2">
+          <Shield className="w-4 h-4 text-green-600" />
+          <span className="text-xs text-slate-600">AI Compliant</span>
         </div>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
-        <Card>
+        <Card className="transition-all duration-200 hover:shadow-md">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <DollarSign className="w-5 h-5" />
@@ -66,6 +81,7 @@ export const FinCoachModule = () => {
                   placeholder="75,000"
                   value={formData.income}
                   onChange={(e) => setFormData({...formData, income: e.target.value})}
+                  className="transition-all duration-200 focus:ring-2 focus:ring-green-500"
                 />
               </div>
               <div>
@@ -75,6 +91,7 @@ export const FinCoachModule = () => {
                   placeholder="32"
                   value={formData.age}
                   onChange={(e) => setFormData({...formData, age: e.target.value})}
+                  className="transition-all duration-200 focus:ring-2 focus:ring-green-500"
                 />
               </div>
               <div>
@@ -84,6 +101,7 @@ export const FinCoachModule = () => {
                   placeholder="100,000"
                   value={formData.savingsGoal}
                   onChange={(e) => setFormData({...formData, savingsGoal: e.target.value})}
+                  className="transition-all duration-200 focus:ring-2 focus:ring-green-500"
                 />
               </div>
               <div>
@@ -93,6 +111,7 @@ export const FinCoachModule = () => {
                   placeholder="10"
                   value={formData.timeframe}
                   onChange={(e) => setFormData({...formData, timeframe: e.target.value})}
+                  className="transition-all duration-200 focus:ring-2 focus:ring-green-500"
                 />
               </div>
             </div>
@@ -103,11 +122,12 @@ export const FinCoachModule = () => {
                 placeholder="15,000"
                 value={formData.currentSavings}
                 onChange={(e) => setFormData({...formData, currentSavings: e.target.value})}
+                className="transition-all duration-200 focus:ring-2 focus:ring-green-500"
               />
             </div>
             <Button 
               onClick={handleAnalyze} 
-              className="w-full bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-600 hover:to-teal-500"
+              className="w-full bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-600 hover:to-teal-500 transition-all duration-200"
               disabled={loading}
             >
               {loading ? 'Generating Plan...' : 'Get Personalized Plan'}
@@ -115,7 +135,7 @@ export const FinCoachModule = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="transition-all duration-200 hover:shadow-md">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5" />
@@ -124,7 +144,7 @@ export const FinCoachModule = () => {
           </CardHeader>
           <CardContent>
             {recommendations ? (
-              <div className="space-y-4">
+              <div className="space-y-4 animate-fade-in">
                 <div className="grid grid-cols-2 gap-3">
                   <div className="text-center p-3 bg-green-50 rounded-lg">
                     <p className="text-2xl font-bold text-green-600">${recommendations.monthlyTarget}</p>
@@ -140,6 +160,10 @@ export const FinCoachModule = () => {
                   <Badge variant="outline" className="mb-2">
                     {recommendations.riskProfile} Risk Profile
                   </Badge>
+                  <div className="text-xs text-slate-500 mb-2">
+                    <div>Confidence: {recommendations.confidence}%</div>
+                    <div>Key Strategy: {recommendations.keyStrategy}</div>
+                  </div>
                   <p className="text-sm text-slate-600">
                     Projected Growth: <span className="font-semibold">${recommendations.projectedGrowth.toLocaleString()}</span>
                   </p>
@@ -163,6 +187,16 @@ export const FinCoachModule = () => {
                     You're on track to reach your savings goal with consistent monthly contributions
                   </p>
                 </div>
+
+                <Button 
+                  onClick={handleDownloadReport}
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full transition-all duration-200 hover:bg-slate-50"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  {reportDownloaded ? 'Report Saved ✓' : 'Download Report'}
+                </Button>
               </div>
             ) : (
               <div className="text-center text-slate-500 py-8">
