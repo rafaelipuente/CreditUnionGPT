@@ -1,73 +1,54 @@
-# Welcome to your Lovable project
+# CreditUnionGPT
 
-## Project info
+## About
 
-**URL**: https://lovable.dev/projects/6ce3652d-b115-4102-ac04-7d5371f0d764
+An AI-powered platform designed specifically for credit unions, providing intelligent solutions for member services, financial coaching, and operational efficiency.
 
-## How can I edit this code?
+## Getting Started
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/6ce3652d-b115-4102-ac04-7d5371f0d764) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Dependencies
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+This project uses the following libraries and frameworks:
 
-**Use GitHub Codespaces**
+- [React](https://react.dev/learn) - JavaScript UI library
+- [Vite](https://vitejs.dev/guide/) - Frontend build tool
+- [React-Router](https://reactrouter.com/en/main) - Routing library for React
+- [Tailwind CSS](https://tailwindcss.com/docs/installation) - Utility-first CSS framework
+- [shadcn/ui](https://ui.shadcn.com/docs) - React component library built with Tailwind and Radix UI
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Key Files and Directories
 
-## What technologies are used for this project?
+- `src/` - Contains all the source code for the project
+  - `components/` - Contains all the UI components
+  - `pages/` - Contains all the pages
+  - `lib/` - Contains utilities and helper functions
+- `public/` - Contains all the static assets
+- `index.html` - The main HTML file
 
-This project is built with:
+## Deployment
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### How can I deploy my project?
 
-## How can I deploy this project?
+There are a few options:
 
-Simply open [Lovable](https://lovable.dev/projects/6ce3652d-b115-4102-ac04-7d5371f0d764) and click on Share -> Publish.
+#### Option 1: Use a service like Vercel or Netlify
 
-## Can I connect a custom domain to my Lovable project?
+1. Push your code to a git repository (Github, Gitlab, etc.)
+2. Connect your repository to Vercel or Netlify
+3. Configure the build settings
+4. Deploy
 
-Yes, you can!
+#### Option 2: Manual Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Build the project for production:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```
+npm run build
+```
+
+Deploy the contents of the `dist` folder to your web server.
