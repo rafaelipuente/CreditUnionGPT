@@ -32,16 +32,16 @@ const modules = [
     description: 'Intelligent document processing'
   },
   {
-    id: 'cu-copilot',
-    name: 'CU Copilot',
-    icon: MessageSquare,
-    description: 'AI assistant for policies'
-  },
-  {
     id: 'fin-coach',
     name: 'FinCoach',
     icon: Target,
     description: 'Personalized financial guidance'
+  },
+  {
+    id: 'cu-copilot',
+    name: 'CU Copilot',
+    icon: MessageSquare,
+    description: 'AI assistant for policies'
   }
 ];
 
